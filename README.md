@@ -1,2 +1,3 @@
-# freebie
-Free Stuff for Cats
+# subcats
+
+Categories & subcategories of Scala.

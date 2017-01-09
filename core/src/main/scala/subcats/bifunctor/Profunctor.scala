@@ -3,7 +3,7 @@ package subcats.bifunctor
 import simulacrum.typeclass
 import subcats.category.Category
 
-@typeclass trait Bifunctor[P[_, _]] {
+@typeclass trait Profunctor[P[_, _]] {
   type L0[_]
   type L1[_, _]
   def L : Category.Aux[L1, L0]
@@ -18,8 +18,8 @@ import subcats.category.Category
 
   def bimap[LX, LY, RX, RY](left: L1[LX, LY], right: R1[RX, RY]): C1[P[LX, RX], P[LY, RY]]
 }
-object Bifunctor {
-  trait Aux[P[_, _], L1_[_, _], L0_[_], R1_[_, _], R0_[_], C1_[_, _], C0_[_]] extends Bifunctor[P] {
+object Profunctor {
+  type Aux[P[_, _], L1_[_, _], L0_[_], R1_[_, _], R0_[_], C1_[_, _], C0_[_]] = Profunctor[P] {
     type L0[A] = L0_[A]
     type L1[A, B] = L1_[A, B]
 
@@ -29,6 +29,4 @@ object Bifunctor {
     type C0[A] = C0_[A]
     type C1[A, B] = C1_[A, B]
   }
-
-  trait Aux1[P[_, _], C1[_, _], C0[_]] extends Aux[P, C1, C0, C1, C0, C1, C0]
 }

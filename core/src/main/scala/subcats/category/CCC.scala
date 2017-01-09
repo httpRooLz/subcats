@@ -14,11 +14,8 @@ import simulacrum.typeclass
   def uncurry[X, Y, Z](f: C1[X, Exp[Y, Z]]): Product[X, Y] -> Z
 }
 object CCC {
-  type Aux[C1_[_, _], C0_[_], P[_, _], PI, E[_, _]] = CCC[C1_] {
-    type C0[A] = C0_[A]
-
+  trait Aux[C1[_, _], C0[_], P[_, _], PI, E[_, _]] extends CCC[C1] with Category.Aux[C1, C0] {
     type Exp[A, B] = E[A, B]
-
     type Product[A, B] = P[A, B]
     type ProductId = PI
   }

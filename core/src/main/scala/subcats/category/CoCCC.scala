@@ -14,11 +14,8 @@ import simulacrum.typeclass
   def uncocurry[X, Y, Z](f: C1[CoExp[Y, Z], X]): Z -> CoExp[X, Y]
 }
 object CoCCC {
-  type Aux[C1_[_, _], C0_[_], S[_, _], SI, E[_, _]] = CoCCC[C1_] {
-    type C0[A] = C0_[A]
-
+  trait Aux[C1[_, _], C0[_], S[_, _], SI, E[_, _]] extends CoCCC[C1] with Category.Aux[C1, C0] {
     type CoExp[A, B] = E[A, B]
-
     type Sum[A, B] = S[A, B]
     type SumId = SI
   }

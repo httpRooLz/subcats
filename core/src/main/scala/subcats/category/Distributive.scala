@@ -14,9 +14,7 @@ import simulacrum.typeclass
   def distribute[A, B, C]: Product[A, Sum[B, C]] -> Sum[Product[A, B], Product[A, C]]
 }
 object Distributive {
-  type Aux[C1_[_, _], C0_[_], P[_, _], PI, S[_, _], SI] = Distributive[C1_] {
-    type C0[A] = C0_[A]
-
+  trait Aux[C1[_, _], C0[_], P[_, _], PI, S[_, _], SI] extends Distributive[C1] with Category.Aux[C1, C0] {
     type ProductId = PI
     type Product[A, B] = P[A, B]
     type SumId = SI

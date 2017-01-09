@@ -10,5 +10,5 @@ import simulacrum.typeclass
   def compose[A[_], B[_], C[_]](f: C1[B, C])(g: C1[A, B]): C1[A, C]
 }
 object CategoryK {
-  type Aux[C1[_[_], _[_]], C0_[_[_]]] = CategoryK[C1] { type C0[A[_]] = C0_[A] }
+  trait Aux[C1[_[_], _[_]], C0_[_[_]]] extends CategoryK[C1] { type C0[A[_]] = C0_[A] }
 }

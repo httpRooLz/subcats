@@ -1,15 +1,14 @@
 package subcats.category
 
-trait Cocartesian[C[_, _], F[_, _]] extends Monoidal[C, F] with Symmetric[C, F] {
-  def inl[A, B]: A C1 F[A, B]
-  def inr[A, B]: B C1 F[A, B]
-  def codiag[A, B]: F[A, A] C1 A
-  def |||[X, Y, Z](f: X C1 Z, g: Y C1 Z): F[X, Y] C1 Z
+trait Cocartesian[->[_, _], F[_, _]] extends Monoidal[->, F] with Symmetric[->, F] {
+  def inl[A, B]: A -> F[A, B]
+  def inr[A, B]: B -> F[A, B]
+  def codiag[A, B]: F[A, A] -> A
+  def |||[X, Y, Z](f: X C1 Z, g: Y C1 Z): F[X, Y] -> Z
 }
 object Cocartesian {
-  type Aux[C1_[_, _], C0_[_], F[_, _], I] = Cocartesian[C1_, F] {
-    type C0[A] = C0_[A]
-    type C1[A, B] = C1_[A, B]
-    type Id = I
-  }
+  trait Aux[C1[_, _], C0[_], F[_, _], I]
+    extends Cocartesian[C1, F]
+      with Monoidal.Aux[F, C1, C0, I]
+      with Symmetric.Aux[F, C1, C0]
 }

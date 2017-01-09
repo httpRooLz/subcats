@@ -9,9 +9,7 @@ trait Monoidal[C[_, _], F[_, _]] extends Associative[C, F] {
   def coidr[A, B]: A C1 F[Id, A]
 }
 object Monoidal {
-  type Aux[F[_, _], C1_[_, _], C0_[_], I] = Monoidal[C1_, F] {
-    type C0[A] = C0_[A]
-    type C1[A, B] = C1_[A, B]
+  trait Aux[F[_, _], C1[_, _], C0[_], I] extends Monoidal[C1, F] with Associative.Aux[C1, C0, F] {
     type Id = I
   }
 }

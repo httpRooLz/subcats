@@ -15,7 +15,7 @@ import subcats.category.Category
   def map[A, B](f: C1[A, B]): D1[F[A], F[B]]
 }
 object Functor {
-  type Aux[F[_], C1_[_, _], C0_[_], D1_[_, _], D0_[_]] = Functor[F] {
+  trait Aux[F[_], C1_[_, _], C0_[_], D1_[_, _], D0_[_]] extends Functor[F] {
     type C0[A] = C0_[A]
     type C1[A, B] = C1_[A, B]
     type D0[A] = D0_[A]

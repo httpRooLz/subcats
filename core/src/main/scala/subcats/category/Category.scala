@@ -1,5 +1,6 @@
 package subcats.category
 
+import cats.Trivial
 import simulacrum.typeclass
 import subcats.functor.Endofunctor
 
@@ -16,4 +17,5 @@ import scala.language.implicitConversions
 }
 object Category {
   trait Aux[C1[_, _], C0_[_]] extends Category[C1] { type C0[A] = C0_[A] }
+  trait AuxT[C1[_, _]] extends Aux[C1, Trivial.P1]
 }

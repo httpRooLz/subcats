@@ -7,6 +7,7 @@ import simulacrum.typeclass
   type C1[A[_], B[_]] = Cat[A, B]
 
   def id[A[_]](implicit A: C0[A]): C1[A, A]
+  def andThen[A[_], B[_], C[_]](g: C1[A, B])(f: C1[B, C]): C1[A, C]
   def compose[A[_], B[_], C[_]](f: C1[B, C])(g: C1[A, B]): C1[A, C]
 }
 object CategoryK {

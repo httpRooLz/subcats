@@ -19,7 +19,7 @@ object Indiscrete {
 
   def groupoid: Groupoid.Aux[->, Constraint] = new Groupoid.Aux[->, Constraint] {
     override def id[A](implicit A: Constraint[A]): A -> A = get[A, A]
-    override def compose[A, B, C](bc: B -> C)(ab: A -> B): A -> C = get[A, C]
+    override def andThen[A, B, C](ab: A -> B, bc: B -> C): A -> C = get[A, C]
     override def flip[A, B](f: A -> B): B -> A = get[B, A]
   }
 }

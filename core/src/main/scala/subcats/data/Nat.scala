@@ -15,7 +15,7 @@ trait Nat[->[_, _], T[_], A[_], B[_]] { ab =>
 
   def andThen[C[_]](bc: Nat[->, T, B, C])(implicit C: Semicategory[->]): Nat[->, T, A, C] =
     new Nat[->, T, A, C] {
-      def apply[X](implicit X: T[X]): A[X] -> C[X] = C.andThen(ab.apply[X](X))(bc.apply[X](X))
+      def apply[X](implicit X: T[X]): A[X] -> C[X] = C.andThen(ab.apply[X](X), bc.apply[X](X))
     }
 }
 

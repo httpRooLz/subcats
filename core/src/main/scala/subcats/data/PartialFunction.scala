@@ -119,7 +119,7 @@ object PartialFunction { self =>
         override def apply(a: A): A = a
       }
 
-    override def compose[A, B, C](f: PartialFunction[B, C])(g: PartialFunction[A, B]): PartialFunction[A, C] =
+    override def andThen[A, B, C](g: PartialFunction[A, B], f: PartialFunction[B, C]): PartialFunction[A, C] =
       new PartialFunction[A, C] {
         override def isDefinedAt(x: A): Boolean = g.isDefinedAt(x) && f.isDefinedAt(g(x))
         override def apply(v1: A): C = f(g(v1))

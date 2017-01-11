@@ -19,8 +19,8 @@ object Arr {
     def andThen[C](bc: Arr[->, T, B1 -> B2, C])(implicit C: Category.Aux[->, T]): Arr[->, T, A1 -> A2, C] =
       bc match { case bc: Only[->, T, B1, B2, c1, c2] =>
         Only[->, T, A1, A2, c1, c2](
-          C.compose(bc.first)(ab.first),
-          C.compose(bc.second)(ab.second))
+          C.andThen(ab.first, bc.first),
+          C.andThen(ab.second, bc.second))
       }
   }
 
@@ -35,7 +35,6 @@ object Arr {
   def category[->[_,_], T[_]](implicit C: Category.Aux[->, T]): Category.Aux[Arr[->, T, ?, ?], Arr.Valid[->, T, ?]] =
     new Category.Aux[Arr[->, T, ?, ?], Arr.Valid[->, T, ?]] {
       override def id[A](implicit A: Valid[->, T, A]): Arr[->, T, A, A] = A.id
-      override def compose[A, B, C](bc: Arr[->, T, B, C])(ab: Arr[->, T, A, B]): Arr[->, T, A, C] =
-        ab.andThen(bc)
+      override def andThen[A, B, C](ab: Arr[->, T, A, B], bc: Arr[->, T, B, C]): Arr[->, T, A, C] = ab.andThen(bc)
     }
 }

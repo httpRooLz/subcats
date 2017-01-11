@@ -3,7 +3,7 @@ package subcats.data
 import cats.Trivial.P1
 import subcats.category.Category.Aux
 import subcats.category._
-import subcats.functor.Endofunctor
+import subcats.functor.Functor
 
 trait Leibniz[A, B] { ab =>
   def subst[F[_]](fa: F[A]): F[B]
@@ -33,7 +33,7 @@ object Leibniz {
     new Groupoid.AuxT[Leibniz[?, ?]] with Concrete.AuxT[Leibniz[?, ?]] {
       override def id[A](implicit A: P1[A]): Leibniz[A, A] =
         Leibniz.refl[A]
-      override def compose[A, B, C](bc: Leibniz[B, C])(ab: Leibniz[A, B]): Leibniz[A, C] =
+      override def andThen[A, B, C](ab: Leibniz[A, B], bc: Leibniz[B, C]): Leibniz[A, C] =
         bc.compose(ab)
       override def flip[A, B](ab: Leibniz[A, B]): Leibniz[B, A] =
         ab.flip
@@ -41,7 +41,7 @@ object Leibniz {
         (a, p) => ab.subst[λ[X => (X, P1[X])]]((a, p))
     }
 
-  def functor[F[_]]: Endofunctor.AuxT[F, Leibniz] = new Endofunctor.AuxT[F, Leibniz] {
+  def functor[F[_]]: Functor.EndoT[F, Leibniz] = new Functor.EndoT[F, Leibniz] {
     override def C: Aux[C1, C0] = groupoid
     override def map[A, B](f: Leibniz[A, B]): Leibniz[F[A], F[B]] = f.lift[F]
   }

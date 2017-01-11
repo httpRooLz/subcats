@@ -25,8 +25,8 @@ object Evidence {
     new Groupoid.Aux[Evidence[T, ?, ?], T] {
       override def id[A](implicit A: T[A]): Evidence[T, A, A] =
         Evidence.id[T, A](A)
-      override def compose[A, B, C](bc: Evidence[T, B, C])(ab: Evidence[T, A, B]): Evidence[T, A, C] =
-        bc compose ab
+      override def andThen[A, B, C](ab: Evidence[T, A, B], bc: Evidence[T, B, C]): Evidence[T, A, C] =
+        ab andThen bc
       override def flip[A, B](f: Evidence[T, A, B]): Evidence[T, B, A] =
         f.flip
     }

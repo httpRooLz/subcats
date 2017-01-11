@@ -97,7 +97,7 @@ object Function1 { self =>
       with HasTerminalObject.Aux[->, Constraint, ProductId]
     {
       override def id[A](implicit A: Constraint[A]): A -> A = identity[A]
-      override def compose[A, B, C](bc: B -> C)(ab: A -> B): A -> C = bc.compose(ab)
+      override def andThen[A, B, C](ab: A -> B, bc: B -> C): A -> C = bc.compose(ab)
 
       override def cartesian: Cartesian.Aux[->, Constraint, Product, ProductId] = self.cartesian
 
